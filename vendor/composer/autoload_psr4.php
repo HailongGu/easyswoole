@@ -26,4 +26,5 @@ return array(
     'EasySwoole\\Actor\\Test\\' => array($vendorDir . '/easyswoole/actor/test'),
     'EasySwoole\\Actor\\' => array($vendorDir . '/easyswoole/actor/src'),
     'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
+    'App\\' => array($baseDir . '/App'),
 );
