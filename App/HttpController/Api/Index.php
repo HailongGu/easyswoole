@@ -6,17 +6,22 @@
  * Time: 10:29
  */
 namespace App\HttpController\Api;
+use EasySwoole\EasySwoole\Config;
 use EasySwoole\Http\AbstractInterface\Controller;
+use EasySwoole\Mysqli\Mysqli;
+
 class Index extends Controller
 {
     function index()
     {
 
-        return $this->writeJson(1,'','api模块操作成功');
+        $config = Config::getInstance()->getConf('MYSQL');
+        $conf = new \EasySwoole\Mysqli\Config($config);
+        $db = new Mysqli($conf);
+        $data = $db->get('wufu_member');//获取一个表的数据
 
-        $this->response()->withHeader('Content-type', 'text/html;charset=utf-8');
-        $this->response()->write('<h1>大傻逼</h1>');
-        // TODO: Implement index() method.
+        return $this->writeJson(1,$data,'api模块操作成功');
+
     }
 
     /**

@@ -36,4 +36,16 @@ return [
         'BACKLOG' => 256,
     ],
     'DISPLAY_ERROR' => true,
+
+    'MYSQL' => [
+        'host'          => '127.0.0.1',
+        'port'          => '3306',
+        'user'          => 'root',
+        'timeout'       => '5',
+        'charset'       => 'utf8',
+        'password'      => 'root',
+        'database'      => 'easy_swoole',
+        'POOL_MAX_NUM'  => '20',
+        'POOL_TIME_OUT' => '0.1',
+    ],
 ];
