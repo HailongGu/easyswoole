@@ -18,3 +18,15 @@
 ```
 - 执行 composer dumpautoload
 
+
+
+### 安装mysql
+- composer安装
+``` 
+#换源
+sudo composer config -g repo.packagist composer https://packagist.phpcomposer.com
+sudo composer require easyswoole/mysqli
+```
+
+
+

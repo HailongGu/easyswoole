@@ -375,6 +375,54 @@
         ]
     },
     {
+        "name": "easyswoole/mysqli",
+        "version": "1.1.14",
+        "version_normalized": "1.1.14.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/easy-swoole/mysqli.git",
+            "reference": "958f8fe4168d4cc3a534f7a3871d787fd5ea0ca0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/easy-swoole/mysqli/zipball/958f8fe4168d4cc3a534f7a3871d787fd5ea0ca0",
+            "reference": "958f8fe4168d4cc3a534f7a3871d787fd5ea0ca0",
+            "shasum": ""
+        },
+        "require": {
+            "easyswoole/spl": "^1.0"
+        },
+        "require-dev": {
+            "easyswoole/swoole-ide-helper": "^1.2"
+        },
+        "time": "2019-03-12T12:51:53+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "EasySwoole\\Mysqli\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "Apache-2.0"
+        ],
+        "authors": [
+            {
+                "name": "YF",
+                "email": "291323003@qq.com"
+            }
+        ],
+        "description": "An efficient swoole framework",
+        "homepage": "https://www.easyswoole.com/",
+        "keywords": [
+            "async",
+            "easyswoole",
+            "framework",
+            "swoole"
+        ]
+    },
+    {
         "name": "easyswoole/socket",
         "version": "1.1.8",
         "version_normalized": "1.1.8.0",

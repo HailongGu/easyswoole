@@ -9,6 +9,7 @@ namespace App\HttpController;
 use EasySwoole\Http\AbstractInterface\Controller;
 use EasySwoole\Http\Message\Status;
 use EasySwoole\EasySwoole\Trigger;
+
 abstract class Base extends Controller
 {
     function index()
