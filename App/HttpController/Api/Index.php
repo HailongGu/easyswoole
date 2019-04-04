@@ -6,6 +6,7 @@
  * Time: 10:29
  */
 namespace App\HttpController\Api;
+use EasySwoole\Component\Di;
 use EasySwoole\EasySwoole\Config;
 use EasySwoole\Http\AbstractInterface\Controller;
 use EasySwoole\Mysqli\Mysqli;
@@ -15,9 +16,7 @@ class Index extends Controller
     function index()
     {
 
-        $config = Config::getInstance()->getConf('MYSQL');
-        $conf = new \EasySwoole\Mysqli\Config($config);
-        $db = new Mysqli($conf);
+        $db = Di::getInstance()->get('MYSQL');
         $data = $db->get('wufu_member');//获取一个表的数据
 
         return $this->writeJson(1,$data,'api模块操作成功');

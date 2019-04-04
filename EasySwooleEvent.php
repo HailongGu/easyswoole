@@ -11,11 +11,15 @@ namespace EasySwoole\EasySwoole;
 
 use App\Console\TestConsole;
 use App\Crontab\TaskOne;
+use EasySwoole\Component\Di;
 use EasySwoole\EasySwoole\Crontab\Crontab;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
 use EasySwoole\EasySwoole\AbstractInterface\Event;
 use EasySwoole\Http\Request;
 use EasySwoole\Http\Response;
+use EasySwoole\Mysqli\Mysqli;
+use EasySwoole\Socket\Dispatcher;
+use App\WebSocket\WebSocketParser;
 
 class EasySwooleEvent implements Event
 {
@@ -32,6 +36,22 @@ class EasySwooleEvent implements Event
     {
         //crontab
         #Crontab::getInstance()->addTask(TaskOne::class);
+        //mysqli
+        $config = Config::getInstance()->getConf('MYSQL');
+        Di::getInstance()->set('MYSQL',new Mysqli(new \EasySwoole\Mysqli\Config($config)));
+
+
+        /**
+         *  开启webscoke
+         */
+        $conf = new \EasySwoole\Socket\Config();
+        $conf->setType(\EasySwoole\Socket\Config::WEB_SOCKET);
+        $conf->setParser(new WebSocketParser());
+        $dispatch = new Dispatcher($conf);
+        $register->set(EventRegister::onMessage, function (\swoole_websocket_server $server, \swoole_websocket_frame $frame) use ($dispatch) {
+            $dispatch->dispatch($server, $frame->data, $frame);
+        });
+
         // TODO: Implement mainServerCreate() method.
     }
 
