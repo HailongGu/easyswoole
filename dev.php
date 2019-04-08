@@ -49,4 +49,11 @@ return [
         'POOL_MAX_NUM'  => '20',
         'POOL_TIME_OUT' => '0.1',
     ],
+
+    'REDIS' => [
+        'host'          => '127.0.0.1',
+        'port'          => '6379',
+        'timeout'       => '5',
+        'password'      => 'vagrant',
+    ],
 ];

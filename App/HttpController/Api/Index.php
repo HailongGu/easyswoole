@@ -36,7 +36,9 @@ class Index extends Controller
 
     public function getRedis(){
 //        $this->response()->write('1111');
-        $redis = Redis::getInstance();
+//        $redis = Redis::getInstance();
+        #注册
+        $redis = Di::getInstance()->get("REDIS");
         $redis->set('haha',"111231132113",66);
         $value = $redis->get('haha');
         return $this->writeJson(1,$value,'api模块操作成功');

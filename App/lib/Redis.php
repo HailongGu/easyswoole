@@ -10,6 +10,7 @@ namespace App\lib;
 
 
 use EasySwoole\Component\Singleton;
+use EasySwoole\EasySwoole\Config;
 
 class  Redis
 {
@@ -22,9 +23,10 @@ class  Redis
             throw new \Exception("redis.so文件不存在");
         }
         try {
+            $redisConfig = Config::getInstance()->getConf('REDIS');
             $this->redis = new \Redis();
-            $res = $this->redis->connect('127.0.0.1', 6379, 3);
-            $res = $res && $this->redis->auth('vagrant');
+            $res = $this->redis->connect($redisConfig['host'], $redisConfig['port'], $redisConfig['timeout']);
+            $res = $res && $this->redis->auth($redisConfig['password']);
         } catch (\Exception $e) {
             throw new \Exception("redis 服务器异常");
         }

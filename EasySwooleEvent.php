@@ -11,6 +11,7 @@ namespace EasySwoole\EasySwoole;
 
 use App\Console\TestConsole;
 use App\Crontab\TaskOne;
+use App\lib\Redis;
 use App\WebSocket\Index;
 use App\WebSocket\WebSocketEvent;
 use EasySwoole\Component\Di;
@@ -41,6 +42,7 @@ class EasySwooleEvent implements Event
         //mysqli
         $config = Config::getInstance()->getConf('MYSQL');
         Di::getInstance()->set('MYSQL',new Mysqli(new \EasySwoole\Mysqli\Config($config)));
+        Di::getInstance()->set('REDIS',Redis::getInstance());
 
 
         /**
