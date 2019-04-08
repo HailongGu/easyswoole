@@ -23,6 +23,7 @@ use EasySwoole\Http\Response;
 use EasySwoole\Mysqli\Mysqli;
 use EasySwoole\Socket\Dispatcher;
 use App\WebSocket\WebSocketParser;
+use EasySwoole\Utility\File;
 
 class EasySwooleEvent implements Event
 {
@@ -31,6 +32,9 @@ class EasySwooleEvent implements Event
     {
         // TODO: Implement initialize() method.
         date_default_timezone_set('Asia/Shanghai');
+
+        self::loadConf(EASYSWOOLE_ROOT."/Config");
+
         //console
         \EasySwoole\Console\ConsoleModuleContainer::getInstance()->set(new TestConsole());
     }
@@ -79,5 +83,15 @@ class EasySwooleEvent implements Event
     public static function afterRequest(Request $request, Response $response): void
     {
         // TODO: Implement afterAction() method.
+    }
+
+
+    public static function loadConf($confPath){
+        $conf = Config::getInstance();
+        $files = File::scanDirectory($confPath);
+        foreach ($files['files'] as $file){
+            $data = require_once $file;
+            $conf->setConf(strtolower(basename($file,'.php')),(array)$data);
+        }
     }
 }
