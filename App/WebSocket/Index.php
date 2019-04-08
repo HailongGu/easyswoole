@@ -7,6 +7,7 @@
  */
 namespace App\WebSocket;
 
+use App\lib\Redis;
 use EasySwoole\EasySwoole\ServerManager;
 use EasySwoole\EasySwoole\Swoole\Task\TaskManager;
 use EasySwoole\Socket\AbstractInterface\Controller;
@@ -20,7 +21,6 @@ use EasySwoole\Socket\AbstractInterface\Controller;
  */
 class Index extends Controller
 {
-    static  $active = [];
 
     function hello()
     {
@@ -37,16 +37,13 @@ class Index extends Controller
         $client = $this->caller()->getClient();
 
         // 异步推送, 这里直接 use fd也是可以的
-        var_dump(self::$active);
-        foreach (self::$active as $fd){
+        $arr = Redis::getInstance()->get("ws_key");
+        $arr = json_decode($arr,true) ?? [];
+
+        foreach ($arr as $fd){
             TaskManager::async(function () use ($client,$fd){
                 $server = ServerManager::getInstance()->getSwooleServer();
-                $i = 0;
-                while ($i < 5) {
-                    sleep(1);
-                    $server->push($fd,$fd.':push in http at '. date('H:i:s'));
-                    $i++;
-                }
+                $server->push($fd,$client->getFd().':push in http at '. date('H:i:s'));
             });
         }
 
