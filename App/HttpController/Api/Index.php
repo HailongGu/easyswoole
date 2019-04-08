@@ -33,5 +33,16 @@ class Index extends Controller
     }
 
 
+    public function getRedis(){
+//        $this->response()->write('1111');
+        $redis = new \Redis();
+        $redis->connect('127.0.0.1','6379','5');
+        $redis->auth('vagrant');
+        $redis->setex("guhl",60,date('Y-m-d H:i:s'));
+        return $this->writeJson(1,$redis->get("guhl"),'api模块操作成功');
+
+    }
+
+
 }
 

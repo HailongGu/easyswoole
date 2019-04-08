@@ -11,6 +11,8 @@ namespace EasySwoole\EasySwoole;
 
 use App\Console\TestConsole;
 use App\Crontab\TaskOne;
+use App\WebSocket\Index;
+use App\WebSocket\WebSocketEvent;
 use EasySwoole\Component\Di;
 use EasySwoole\EasySwoole\Crontab\Crontab;
 use EasySwoole\EasySwoole\Swoole\EventRegister;
@@ -48,8 +50,19 @@ class EasySwooleEvent implements Event
         $conf->setType(\EasySwoole\Socket\Config::WEB_SOCKET);
         $conf->setParser(new WebSocketParser());
         $dispatch = new Dispatcher($conf);
+
         $register->set(EventRegister::onMessage, function (\swoole_websocket_server $server, \swoole_websocket_frame $frame) use ($dispatch) {
             $dispatch->dispatch($server, $frame->data, $frame);
+        });
+
+
+        $websocketEvent = new websocketEvent();
+        $register->set(EventRegister::onHandShake, function (\swoole_http_request $request, \swoole_http_response $response) use ($websocketEvent) {
+            $websocketEvent->onHandShake($request, $response);
+        });
+
+        $register->set(EventRegister::onClose, function (\swoole_server $server, int $fd, int $reactorId) use ($websocketEvent) {
+            $websocketEvent->onClose($server, $fd, $reactorId);
         });
 
         // TODO: Implement mainServerCreate() method.

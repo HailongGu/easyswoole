@@ -1,5 +1,5 @@
 <?php
-namespace App\HttpController;
+namespace App\HttpController\WsTest;
 
 use EasySwoole\Http\AbstractInterface\Controller;
 use EasySwoole\EasySwoole\ServerManager;
